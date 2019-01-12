@@ -16,7 +16,7 @@
     <div class="container-fluid text-center" id="banner">
         
         <div class="container">
-            <h1>TITULO DE MI PAGINA</h1>
+            <h1>Los mejor</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
