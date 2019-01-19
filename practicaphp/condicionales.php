@@ -39,6 +39,26 @@ if ($hora < 12) {
      echo "La Hora es mayor a 13";
 }
 
+//CONDICIONAL SWITCH
+echo "<br>";
+$color= "azul";
+
+switch ($color) {
+	case 'rojo':
+		echo "Mi color favorito es rojo";
+		break;
+
+    case 'azul':
+		echo "Mi color favorito es azul";
+		break;
+	
+	default:
+			echo "No tengo color favorito";
+		break;
+}
+
+
+
 
 
 
