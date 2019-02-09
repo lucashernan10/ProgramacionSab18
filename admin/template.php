@@ -85,9 +85,40 @@ desired effect
     <!-- Main content -->
     <section class="content container-fluid">
 
-      <!--------------------------
-        | Your Page Content Here |
-        -------------------------->
+      <!-- LISTADO DE DATOS -->
+      <div>
+        <div class="box box-default">
+
+          <table class="table table-borbered">
+            <thead>
+              <tr>
+                <th>COL</th>
+                <th>COL</th>
+                <th>COL</th>
+                <th>COL</th>
+                <th>COL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>---</td>
+                <td>---</td>
+                <td>---</td>
+                <td>---</td>
+
+                <td>
+                  <a href="" class="btn btn-danger">Eliminar</a>
+                  <a href="" class="btn btn-primary">Editar</a>
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      
+      <!-- /FIN DE LISTADO DE DATOS -->
 
     </section>
     <!-- /.content -->

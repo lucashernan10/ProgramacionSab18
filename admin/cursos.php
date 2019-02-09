@@ -61,6 +61,15 @@ desired effect
 
   <!-- Main Header -->
   <?php include 'includes/header.php'; ?>
+  <?php 
+
+  $sql = "SELECT * from cursos";
+   $query = $connection->prepare($sql);
+   $query->execute();   
+   $result= $query->fetchAll();
+
+   ?>
+
   
   <!-- Left side column. contains the logo and sidebar -->
   
@@ -71,8 +80,7 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Page Header
-        <small>Optional description</small>
+        Lista de Cursos  <a href="cursos-add.php" class="btn btn-success">+ Agregar</a>
       </h1>
       
       <ol class="breadcrumb">
@@ -85,9 +93,45 @@ desired effect
     <!-- Main content -->
     <section class="content container-fluid">
 
-      <!--------------------------
-        | Your Page Content Here |
-        -------------------------->
+      <!-- LISTADO DE DATOS -->
+      <div>
+        <div class="box box-default">
+
+          <table class="table table-borbered">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>NOMBRE</th>
+                <th>DIAS</th>
+
+                <th>ACCIONES</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($result as $row) { ?>
+
+              <tr>
+                <td><?php echo $row['id'] ; ?></td>
+                <td><?php echo $row['nombre'] ; ?></td>
+                <td><?php echo $row['dias'] ; ?></td>
+                <td><?php echo $row['descripcion_corta'] ; ?></td>
+                <td>
+
+                  <a href="cursos-delete.php?id=<?php echo $row['id'] ; ?>" class="btn btn-danger">Eliminar</a>
+
+                  <a href="cursos-update.php?id=<?php echo $row['id'] ; ?>" class="btn btn-primary">Editar</a>
+                </td>
+
+              </tr>
+
+              <?php } ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      
+      <!-- /FIN DE LISTADO DE DATOS -->
 
     </section>
     <!-- /.content -->

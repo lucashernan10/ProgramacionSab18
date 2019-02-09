@@ -1,47 +1,72 @@
+<?php 
+session_start();
+//variable de session creada en el archivo sesiones.php
+echo $_SESSION['nombre'];
+
+echo "<br> <a href='salir.php'>salir</a>";
+
+  //require 'funciones.php'; 
+  //saludar("Juan");
+   require '../conexion/conexion.php';
+  
+   $sql = "SELECT * from usuarios";
+   $query = $connection->prepare($sql);
+   $query->execute();   
+   $result= $query->fetchAll();
+
+   //print_r($result);
+   //echo "<br> Los datos son";
+   //echo $result['email'];
+  
+ 
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>PRACTICA PHP</title>	   	
-   <link rel="stylesheet" href="../css/bootstrap.css">
+	<title>Curso de Programacion</title>
+	<link rel="stylesheet" href="../css/bootstrap.css">
 </head>
-<body>      
-    <main>
-      <h1>PRACTICA PHP</h1>
-      <ul>
-        <li><a href="variables.php">Variables</a></li>
-        <li><a href="condicionales.php">Condicionales</a></li>
-        <li><a href="array.php">Array o matrices</a></li>
-        <li><a href="ciclos.php">Ciclos</a></li>
-        <li><a href="operaciones.php">Operaciones/Funciones</a></li>
-      </ul>
+<body>
 
-      <div class="col-sm-12">
-        <table class="table table-bordered ">
-          <thead>
-            <th>ID</th>
-            <th>NOMBRE</th>
-            <th>EMAIL</th>
-            <th>PASSWORD</th>
+	<main>
+		<a href="index.php">Volver</a>
+		<h1>Lista de Usuarios</h1>
 
-            <th>ACCIONES</th>
-            
-          </thead> 
-          <tbody>
-            <tr>
-              <td>12</td>
-              <td>Juan</td>
-              <td>juan@gmail.com</td>
-              <td>454465454</td>
+		<div class="col-sm-12">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Nombre</th>
+						<th>Email</th>
+						<th>Password</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
 
-              <td>
-                <a href="">Eliminar</a>
-                <a href="">Editar</a>
-              </td>
+				<tbody>
+					<?php foreach ($result as $row) { ?>			
+						 <tr> 
+							<td><?php echo $row['id']; ?></td>
+							<td><?php echo $row['nombre']; ?></td>
+							<td><?php echo $row['email']; ?></td>
+							<td><?php echo $row['password']; ?></td>
+							<td>
+								<a href="">Eliminar</a>
+								<a href="">Actualizar</a>
+							</td>
+						</tr>
+					<?php } ?>
+				</tbody>
 
-            </tr>
-          </tbody>         
-        </table>
-      </div>
-    
-    </main>
+
+				
+			</table>
+		</div>	
+
+	</main>
+
+</body>
 </html>

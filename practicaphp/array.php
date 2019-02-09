@@ -46,4 +46,6 @@ echo "Una ciruela es ".$colores['frutas']['ciruela'].",
 y una violeta es " .$colores['flores']['violeta']; 
 
 
+
+
 ?>
