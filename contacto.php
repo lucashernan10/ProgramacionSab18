@@ -1,3 +1,4 @@
+<?php include 'funciones/funciones.php'; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,9 +59,17 @@
         </div>
 
         <div class="col-md-9">
+
+          <?php if(isset($_POST['enviar'])){
+              echo registrar_mensaje($_POST);
+            } ?>    
+
+           
            <h3>Formulario de Contacto</h3>
-           <form>
+           <form method="post">
              <input type="text" name="nombre" class="form-control" placeholder="Nombre">
+
+             <input type="text" name="email" class="form-control" placeholder="Email">
 
              <input type="text" name="apellido" class="form-control" placeholder="Apellido">
 

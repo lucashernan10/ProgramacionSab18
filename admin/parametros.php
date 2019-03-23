@@ -40,7 +40,7 @@ if (!isset($_SESSION['logueado'])) {
     function subir_imagen(input, carpeta)
         {
           self.name = 'opener';
-          var name = document.getElementsByName("avatar")[0].value;
+          var name = document.getElementsByName("logo")[0].value;
           remote = open('libs/subir_imagen.php?name='+name+'&input='+input+'&carpeta='+carpeta ,'remote', 'align=center,width=600,height=300,resizable=yes,status=yes');
           remote.focus();
         }
@@ -76,43 +76,54 @@ desired effect
 
   <?php
 
-  if (isset($_POST)) {
-    if (isset($_POST['Guardar']) && $_POST['Guardar'] == 'Guardar' && $_POST['nombre'] != '' && $_POST['email'] != '' && $_POST['password'] != '') {
-      //CAPTURAR LOS DATOS RECIBIDOS DEL FORMLARIO VIA POST Y GUARDARLOS EN VARIABLES
-      $nombre = $_POST['nombre'];
-      $password = md5($_POST['password']); //encriptar contraseña recibida
-      $activo = $_POST['activo'];
-      $avatar = $_POST['avatar'];
-      $email = $_POST['email'];
+      
 
-      //guardar consulta sql a ejecutar en una variable
-      $sql = 'INSERT INTO usuarios (nombre, email, password, avatar, activo, fecha_add) VALUES (:nombre, :email, :password, :avatar, :activo, NOW())';
+        //Actualizar datos del Usuario
+        if(isset($_POST)){
+          if(isset($_POST['Actualizar']) && $_POST['Actualizar'] == 'Actualizar'  && $_POST['id'] > 0){
+
+              $sql = "UPDATE parametros set empresa = :empresa, logo =:logo, favicon=:favicon, telefono =:telefono, whatsApp =:whatsApp, direccion =:direccion, email =:email, twitter =:twitter, youtube = :youtube, google_maps =:google_maps, descripcion =:descripcion, fecha_update=NOW() WHERE id = " . $_POST['id'];
+
+              $data = array(
+                'empresa' => $_POST['empresa'],
+                'logo' => $_POST['logo'],
+                'favicon' => $_POST['favicon'],
+                'telefono' => $_POST['telefono'],
+                'whatsApp' => $_POST['whatsApp'],
+                'direccion' => $_POST['direccion'],
+                'email' => $_POST['email'],
+                'twitter' => $_POST['twitter'],
+                'youtube' => $_POST['youtube'],
+                'google_maps' => $_POST['google_maps'],
+                'descripcion' => $_POST['descripcion']
 
 
-      //definir VARIABLE $data array() con los valores para la consulta SQL
-      $data = array(
-        'nombre' => $nombre,
-        'email' => $email,
-        'password' => $password,
-        'avatar' => $avatar,
-        'activo' => $activo
-      );
+              );
 
-      //preparar la consulta SQL
-      $query = $connection->prepare($sql);
+              $query = $connection->prepare($sql);
 
-      try {
-          $query->execute($data); //Ejutamos la consulta
-          //Guardamos un mensaje de exito en una variable
-          $mensaje = '<p class="alert alert-success">Registrado correctamente</p>';
-          //redireccionamos al listado de usuarios con JavaScript
-          echo '<script> window.location = "usuarios.php"; </script>';
+              try{
 
-       }   catch (Exeption $e) { //si hay algin error, guardamos en la variable $mensaje
-        $mensaje = '<p class="alert alert-danger">' .$e .'</p>';
-    }
-  }
-  }
+                $query->execute($data);
+
+              } catch(Exeption $e){
+
+            }
+
+          }
+      }
+
+        $total = 0;
+
+       
+              $sql = "SELECT * FROM parametros WHERE id = 1";
+              $query = $connection->prepare($sql);
+              $query->execute();
+              $total = $query->rowCount();  
+
+
+          
+
   ?>
   
   <!-- Left side column. contains the logo and sidebar -->
@@ -124,7 +135,7 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Lista de Usuarios  <a href="usuarios-add.php" class="btn btn-sucess">+ Agregar</a>
+        Lista de parametros  <a href="parametros.php" class="btn btn-sucess">+ Agregar</a>
       </h1>
       
       <ol class="breadcrumb">
@@ -144,36 +155,66 @@ desired effect
          <?php include 'includes/mensajes.php'; ?>
 
 
-      <!-- LISTADO DE DATOS -->
+      
        <div class="col-md-12">
         <div class="panel row">
          
+         <?php if($total > 0) {
+          $parametro = $query->fetch();
+          //var_dump($usuario0);
+
+          ?>
+
           <form action="" method="POST" name="form">
             <div class="form-group col-m-d-6">
-              <label>Nombre del Usuario</label>
-              <input type="text" name="nombre" class="form-control" required>
+            
+              <label>Empresa</label>
+              <input type="text" name="empresa" class="form-control" value="<?php echo $parametro['empresa'] ?>" required>
 
-              <label>E-mail</label>
-              <input type="email" name="email" class="form-control" required>
-
-              <label>Contraseña</label>
-              <input type="password" name="password" class="form-control" required>
               
-              <label>Activo</label>
-              <select class="form-control" name="activo" required>
-                <option value="1"> SI</option>
-                <option value="0"> NO</option>
-              </select>
 
-              <label>Avatar</label>
-              <input type="text" name="avatar"  class="form-control" onclick="subir_imagen('avatar', 'usuarios')">
+              <label>Logo</label>
+             <input type="text" name="logo"  class="form-control" id="logo" value="<?php echo $parametro['logo'] ?>" onclick="subir_imagen('logo', 'pagina')">
+
+              <label>Favicon</label>
+              <input type="imagen" name="favicon" value="<?php echo $parametro['favicon'] ?>" class="form-control" required>
+
+              <label>Telefono</label>
+              <input type="precio" name="telefono" value="<?php echo $parametro['telefono'] ?>" class="form-control" required>
+              
+             
+
+              <label>WhatsApp</label>
+              <input type="text" name="whatsApp" class="form-control" value="<?php echo $parametro['whatsApp'] ?>" required>
+
+              <label>Direccion</label>
+              <input type="text" name="direccion" class="form-control" value="<?php echo $parametro['direccion'] ?>" required>
+
+              <label>Email</label>
+              <input type="text" name="email" class="form-control" value="<?php echo $parametro['email'] ?>" required>
+
+              <label>Twitter</label>
+              <input type="text" name="twitter" class="form-control" value="<?php echo $parametro['twitter'] ?>" required>
+
+              <label>Youtube</label>
+              <input type="text" name="youtube" class="form-control" value="<?php echo $parametro['youtube'] ?>" required>
+
+              <label>Google_maps</label>
+              <input type="text" name="google_maps" class="form-control" value="<?php echo $parametro['google_maps'] ?>" required>
+
+              <label>Descripcion</label>
+              <input type="text" name="descripcion" class="form-control" value="<?php echo $parametro['descripcion'] ?>" required>
+
+               <input type="text" name="id" class="form-control" value="<?php echo $parametro['id'] ?>" required>
 
               <br>
-              <input type="submit" class="btn btn'succes" name="Guardar" value="Guardar">
+              <input type="submit" class="btn btn-success" name="Actualizar" value="Actualizar">
 
             </div>
           </form>
-          
+
+          <?php } ?>
+        
         </div>
       </div>
 

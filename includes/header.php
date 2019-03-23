@@ -3,7 +3,7 @@
          <div class="container">
            <nav >          
           <a href="index.html" class="logo">
-            <img src="imagenes/logo2.png">
+            <img src="imagenes/pagina/logo2.png">
           </a>
 
           <ul>

@@ -76,43 +76,49 @@ desired effect
 
   <?php
 
-  if (isset($_POST)) {
-    if (isset($_POST['Guardar']) && $_POST['Guardar'] == 'Guardar' && $_POST['nombre'] != '' && $_POST['email'] != '' && $_POST['password'] != '') {
-      //CAPTURAR LOS DATOS RECIBIDOS DEL FORMLARIO VIA POST Y GUARDARLOS EN VARIABLES
-      $nombre = $_POST['nombre'];
-      $password = md5($_POST['password']); //encriptar contraseña recibida
-      $activo = $_POST['activo'];
-      $avatar = $_POST['avatar'];
-      $email = $_POST['email'];
+      
 
-      //guardar consulta sql a ejecutar en una variable
-      $sql = 'INSERT INTO usuarios (nombre, email, password, avatar, activo, fecha_add) VALUES (:nombre, :email, :password, :avatar, :activo, NOW())';
+        //Actualizar datos del Usuario
+        if(isset($_POST)){
+          if(isset($_POST['Actualizar']) && $_POST['Actualizar'] == 'Actualizar' && $_POST['nombre'] != '' && $_POST['id'] > 0){
+
+              $sql = "UPDATE usuarios set nombre = :nombre, email = :email, password =:password, activo=:activo, avatar= :avatar, fecha_update=NOW() WHERE id = " . $_POST['id'];
+
+              $data = array(
+                'nombre' => $_POST['nombre'],
+                'email' => $_POST['email'],
+                'password' => md5($_POST['password']),
+                'activo' => $_POST['activo'],
+                'avatar' => $_POST['avatar']
+
+              );
+
+              $query = $connection->prepare($sql);
+
+              try{
+
+                $query->execute($data);
+
+              } catch(Exeption $e){
+
+            }
+
+          }
+      }
+
+        $total = 0;
+
+        if(isset($_GET['id'])){
+          if($_GET['id'] > 0){
+              $sql = "SELECT * FROM usuarios WHERE id = " .$_GET['id'];
+              $query = $connection->prepare($sql);
+              $query->execute();
+              $total = $query->rowCount();  
 
 
-      //definir VARIABLE $data array() con los valores para la consulta SQL
-      $data = array(
-        'nombre' => $nombre,
-        'email' => $email,
-        'password' => $password,
-        'avatar' => $avatar,
-        'activo' => $activo
-      );
+          }
+        }
 
-      //preparar la consulta SQL
-      $query = $connection->prepare($sql);
-
-      try {
-          $query->execute($data); //Ejutamos la consulta
-          //Guardamos un mensaje de exito en una variable
-          $mensaje = '<p class="alert alert-success">Registrado correctamente</p>';
-          //redireccionamos al listado de usuarios con JavaScript
-          echo '<script> window.location = "usuarios.php"; </script>';
-
-       }   catch (Exeption $e) { //si hay algin error, guardamos en la variable $mensaje
-        $mensaje = '<p class="alert alert-danger">' .$e .'</p>';
-    }
-  }
-  }
   ?>
   
   <!-- Left side column. contains the logo and sidebar -->
@@ -144,36 +150,48 @@ desired effect
          <?php include 'includes/mensajes.php'; ?>
 
 
-      <!-- LISTADO DE DATOS -->
+      
        <div class="col-md-12">
         <div class="panel row">
          
+         <?php if($total > 0) {
+          $usuario = $query->fetch();
+          //var_dump($usuario0);
+
+          ?>
+
           <form action="" method="POST" name="form">
             <div class="form-group col-m-d-6">
               <label>Nombre del Usuario</label>
-              <input type="text" name="nombre" class="form-control" required>
+              <input type="text" name="nombre" value="<?php echo $usuario['nombre'] ?>" class="form-control" required>
 
               <label>E-mail</label>
-              <input type="email" name="email" class="form-control" required>
+              <input type="email" name="email" value="<?php echo $usuario['email'] ?>" class="form-control" required>
 
               <label>Contraseña</label>
-              <input type="password" name="password" class="form-control" required>
+              <input type="password" name="password" value="<?php echo $usuario['password'] ?>" class="form-control" required>
               
               <label>Activo</label>
               <select class="form-control" name="activo" required>
-                <option value="1"> SI</option>
-                <option value="0"> NO</option>
+                <option value="1" <?php if($usuario['activo'] == 1){ echo 'selected'; } ?> >SI</option>
+                <option value="0" <?php if($usuario['activo'] == 1){ echo 'selected'; } ?>> NO</option>
+
               </select>
 
-              <label>Avatar</label>
-              <input type="text" name="avatar"  class="form-control" onclick="subir_imagen('avatar', 'usuarios')">
+               <label>Avatar</label>
+              <input type="text" name="avatar"  class="form-control" value="<?php echo $usuario['avatar'] ?>" id="avatar"  onclick="subir_imagen('avatar', 'usuarios')">
+
+
+               <input type="text" name="id" class="form-control" value="<?php echo $usuario['id'] ?>" required>
 
               <br>
-              <input type="submit" class="btn btn'succes" name="Guardar" value="Guardar">
+              <input type="submit" class="btn btn-success" name="Actualizar" value="Actualizar">
 
             </div>
           </form>
-          
+
+          <?php } ?>
+        
         </div>
       </div>
 

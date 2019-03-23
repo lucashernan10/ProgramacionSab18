@@ -36,11 +36,11 @@ if (!isset($_SESSION['logueado'])) {
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
-        <script>
+         <script>
     function subir_imagen(input, carpeta)
         {
           self.name = 'opener';
-          var name = document.getElementsByName("avatar")[0].value;
+          var name = document.getElementsByName("imagen")[0].value;
           remote = open('libs/subir_imagen.php?name='+name+'&input='+input+'&carpeta='+carpeta ,'remote', 'align=center,width=600,height=300,resizable=yes,status=yes');
           remote.focus();
         }
@@ -76,43 +76,53 @@ desired effect
 
   <?php
 
-  if (isset($_POST)) {
-    if (isset($_POST['Guardar']) && $_POST['Guardar'] == 'Guardar' && $_POST['nombre'] != '' && $_POST['email'] != '' && $_POST['password'] != '') {
-      //CAPTURAR LOS DATOS RECIBIDOS DEL FORMLARIO VIA POST Y GUARDARLOS EN VARIABLES
-      $nombre = $_POST['nombre'];
-      $password = md5($_POST['password']); //encriptar contraseña recibida
-      $activo = $_POST['activo'];
-      $avatar = $_POST['avatar'];
-      $email = $_POST['email'];
+      
 
-      //guardar consulta sql a ejecutar en una variable
-      $sql = 'INSERT INTO usuarios (nombre, email, password, avatar, activo, fecha_add) VALUES (:nombre, :email, :password, :avatar, :activo, NOW())';
+        //Actualizar datos del Usuario
+        if(isset($_POST)){
+          if(isset($_POST['Actualizar']) && $_POST['Actualizar'] == 'Actualizar' && $_POST['nombre'] != '' && $_POST['id'] > 0){
+
+              $sql = "UPDATE cursos set nombre = :nombre, descripcion_corta = :descripcion_corta, descripcion_detallada =:descripcion_detallada, imagen=:imagen, precio =:precio, duracion =:duracion, dias =:dias, activo =:activo, fecha_update=NOW() WHERE id = " . $_POST['id'];
+
+              $data = array(
+                'nombre' => $_POST['nombre'],
+                'descripcion_corta' => $_POST['descripcion_corta'],
+                'descripcion_detallada' => $_POST['descripcion_detallada'],
+                'imagen' => $_POST['imagen'],
+                'precio' => $_POST['precio'],
+                'duracion' => $_POST['duracion'],
+                'dias' => $_POST['dias'],
+                'activo' => $_POST['activo']
 
 
-      //definir VARIABLE $data array() con los valores para la consulta SQL
-      $data = array(
-        'nombre' => $nombre,
-        'email' => $email,
-        'password' => $password,
-        'avatar' => $avatar,
-        'activo' => $activo
-      );
+              );
 
-      //preparar la consulta SQL
-      $query = $connection->prepare($sql);
+              $query = $connection->prepare($sql);
 
-      try {
-          $query->execute($data); //Ejutamos la consulta
-          //Guardamos un mensaje de exito en una variable
-          $mensaje = '<p class="alert alert-success">Registrado correctamente</p>';
-          //redireccionamos al listado de usuarios con JavaScript
-          echo '<script> window.location = "usuarios.php"; </script>';
+              try{
 
-       }   catch (Exeption $e) { //si hay algin error, guardamos en la variable $mensaje
-        $mensaje = '<p class="alert alert-danger">' .$e .'</p>';
-    }
-  }
-  }
+                $query->execute($data);
+
+              } catch(Exeption $e){
+
+            }
+
+          }
+      }
+
+        $total = 0;
+
+        if(isset($_GET['id'])){
+          if($_GET['id'] > 0){
+              $sql = "SELECT * FROM cursos WHERE id = " .$_GET['id'];
+              $query = $connection->prepare($sql);
+              $query->execute();
+              $total = $query->rowCount();  
+
+
+          }
+        }
+
   ?>
   
   <!-- Left side column. contains the logo and sidebar -->
@@ -124,7 +134,7 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Lista de Usuarios  <a href="usuarios-add.php" class="btn btn-sucess">+ Agregar</a>
+        Lista de Cursos  <a href="cursos-update.php" class="btn btn-sucess">+ Agregar</a>
       </h1>
       
       <ol class="breadcrumb">
@@ -144,36 +154,56 @@ desired effect
          <?php include 'includes/mensajes.php'; ?>
 
 
-      <!-- LISTADO DE DATOS -->
+      
        <div class="col-md-12">
         <div class="panel row">
          
+         <?php if($total > 0) {
+          $curso = $query->fetch();
+          //var_dump($usuario0);
+
+          ?>
+
           <form action="" method="POST" name="form">
             <div class="form-group col-m-d-6">
-              <label>Nombre del Usuario</label>
-              <input type="text" name="nombre" class="form-control" required>
+              <label>Nombre del Curso</label>
+              <input type="text" name="nombre" value="<?php echo $curso['nombre'] ?>" class="form-control" required>
 
-              <label>E-mail</label>
-              <input type="email" name="email" class="form-control" required>
+              <label>Descripcion_corta</label>
+              <input type="text" name="descripcion_corta" class="form-control" value="<?php echo $curso['descripcion_corta'] ?>" required>
 
-              <label>Contraseña</label>
-              <input type="password" name="password" class="form-control" required>
+              <label>Descripcion_detallada</label>
+              <input type="text" name="descripcion_detallada" class="form-control" value="<?php echo $curso['descripcion_detallada'] ?>" required>
+ 
+              <label>Imagen</label>
+              <input type="text" name="imagen"  class="form-control" value="<?php echo $curso['imagen'] ?>" id="imagen"  onclick="subir_imagen('imagen', 'cursos')">
+
+              <label>Precio</label>
+              <input type="precio" name="precio" value="<?php echo $curso['precio'] ?>" class="form-control" required>
               
               <label>Activo</label>
               <select class="form-control" name="activo" required>
-                <option value="1"> SI</option>
-                <option value="0"> NO</option>
+                <option value="1" <?php if($curso['activo'] == 1){ echo 'selected'; } ?> >SI</option>
+                <option value="0" <?php if($curso['activo'] == 1){ echo 'selected'; } ?>> NO</option>
+
               </select>
 
-              <label>Avatar</label>
-              <input type="text" name="avatar"  class="form-control" onclick="subir_imagen('avatar', 'usuarios')">
+              <label>Duracion</label>
+              <input type="text" name="duracion" class="form-control" value="<?php echo $curso['duracion'] ?>" required>
+
+              <label>Dias</label>
+              <input type="text" name="dias" class="form-control" value="<?php echo $curso['dias'] ?>" required>
+
+               <input type="text" name="id" class="form-control" value="<?php echo $curso['id'] ?>" required>
 
               <br>
-              <input type="submit" class="btn btn'succes" name="Guardar" value="Guardar">
+              <input type="submit" class="btn btn-success" name="Actualizar" value="Actualizar">
 
             </div>
           </form>
-          
+
+          <?php } ?>
+        
         </div>
       </div>
 

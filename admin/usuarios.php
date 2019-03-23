@@ -68,7 +68,7 @@ desired effect
    $query->execute();   
    $result= $query->fetchAll();
 
-   ?>
+   ?> 
 
   
   <!-- Left side column. contains the logo and sidebar -->

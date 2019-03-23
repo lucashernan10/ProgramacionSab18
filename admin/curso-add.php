@@ -35,6 +35,18 @@ if (!isset($_SESSION['logueado'])) {
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+        <script>
+    function subir_imagen(input, carpeta)
+        {
+          self.name = 'opener';
+          var name = document.getElementsByName("imagen")[0].value;
+          remote = open('libs/subir_imagen.php?name='+name+'&input='+input+'&carpeta='+carpeta ,'remote', 'align=center,width=600,height=300,resizable=yes,status=yes');
+          remote.focus();
+        }
+
+</script>
+
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -70,7 +82,7 @@ desired effect
       $nombre = $_POST['nombre'];
       $descripcion_corta = $_POST['descripcion_corta'];
       $descripcion_detallada = $_POST['descripcion_detallada'];
-      $precio = md5($_POST['precio']);
+      $precio = ($_POST['precio']);
       $duracion = $_POST['duracion'];
       $dias = $_POST['dias'];
       $activo = $_POST['activo'];
@@ -136,7 +148,7 @@ desired effect
         <div class="panel row">
       <?php include 'includes/mensajes.php'; ?>
 
-          <form action="" method="POST">
+          <form action="" method="POST" name="form">
             <div class="form-group col-m-d-6">
               <label>Nombre</label>
               <input type="text" name="nombre" class="form-control" required>
@@ -165,7 +177,8 @@ desired effect
               <input type="text" name="dias" class="form-control" required>
 
               <label>Imagen</label>
-              <input type="text" name="imagen" class="form-control" required>
+    <input type="text" name="imagen"  class="form-control" id="imagen"  onclick="subir_imagen('imagen', 'cursos')">
+
 
               <br>
               <input type="submit" class="btn btn'succes" name="Guardar" value="Guardar">
