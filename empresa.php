@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Empresa</title>	  
+	<title>Empresa-<?php echo parametros()['empresa']; ?></title>	  
   	<meta name="description" content="Cursos de programacion y diseño en Ciudad del este- Paraguay">
     <meta name="keywords" content="programacion, Cursos, diseño, ciudad del este">
     <?php include 'includes/head.php'; ?>    

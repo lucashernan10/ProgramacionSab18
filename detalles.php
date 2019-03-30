@@ -1,7 +1,19 @@
+<?php include 'funciones/funciones.php'; ?>
+
+<?php 
+if (isset($_GET['id'])) {
+  $id=$_GET['id'];
+}
+
+$curso = getDetalleCurso($id);
+
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Mi primera página</title>	  
+	<title><?php echo parametros()['empresa']; ?></title>	  
   	<meta name="description" content="Cursos de programacion y diseño en Ciudad del este- Paraguay">
     <meta name="keywords" content="programacion, Cursos, diseño, ciudad del este">
     <?php include 'includes/head.php'; ?>    
@@ -15,8 +27,8 @@
     <main>
       <section class="main-header">
       <div class="container">
-        <h1>Titulo del Curso</h1> 
-        <h2>descripcion corta del curso.</h2>     
+        <h1><?php echo $curso['nombre'] ?></h1> 
+        <h2><?php echo $curso['descripcion_corta'] ?></h2>     
       </div>      
       </section>
 
@@ -30,7 +42,7 @@
               </div>
               <div class="media-body">
                 <h4 class="media-heading">Precio</h4>
-                <span>550.000GS</span>                
+                <span><?php echo $curso['precio'] ?></span>                
               </div>
             </div>
 
@@ -39,7 +51,7 @@
               </div>
               <div class="media-body">
                 <h4 class="media-heading">Duracion</h4>
-                <span>5 meses</span>                
+                <span><?php echo $curso['duracion'] ?></span>                
               </div>
             </div>
 
@@ -49,7 +61,7 @@
               </div>
               <div class="media-body">
                 <h4 class="media-heading">Dias</h4>
-                <span>Lunes y Viernes</span>                
+                <span><?php echo $curso['dias'] ?></span>                
               </div>
             </div>
 

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mi primera página</title>    
+  <title>Contacto<?php echo parametros()['empresa']; ?></title>    
     <meta name="description" content="Cursos de programacion y diseño en Ciudad del este- Paraguay">
     <meta name="keywords" content="programacion, Cursos, diseño, ciudad del este">
     <?php include 'includes/head.php'; ?>    
@@ -18,8 +18,7 @@
     <section class="main-header">
       <div class="container">
         <h1>Contacto</h1> 
-        <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.</h2>     
+        <h2>Datos del Usuario</h2>     
       </div>      
    </section>
 

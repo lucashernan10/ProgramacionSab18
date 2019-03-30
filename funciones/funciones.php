@@ -1,4 +1,44 @@
 <?php 
+//OBTENER LISTADO DE PARAMETROS
+function parametros(){
+	include 'conexion/conexion.php';
+	$sql = "SELECT * FROM parametros where id = 1";
+	$query = $connection->prepare($sql);
+	$query->execute();
+
+	if(!$query->rowCount() > 0) {
+		$sql = "INSERT INTO parametro (id) values (1)";
+		$query2 = $connection->prepare($sql);
+		$query2->execute();
+	}
+	//$query->execute();
+	return $query->fetch();
+}
+
+
+function getCursos($cantidad)
+{
+	include 'conexion/conexion.php';
+	$sql = "SELECT * FROM cursos WHERE activo = 1 LIMIT " . $cantidad;
+	$query = $connection->prepare($sql);
+	$query->execute();
+
+	return $query->fetchAll();
+}
+
+function getDetalleCurso($id){
+	include 'conexion/conexion.php';
+	$sql = "SELECT * FROM cursos WHERE id = " . $id;
+	$query = $connection->prepare($sql);
+	$query->execute();
+
+if ($query->rowCount() > 0) {
+	return $query->fetch();
+ }
+ return 0;
+}
+
+
 //GUARDAR MENSAJE DE FORMULARIO DE CONTACTO
 function registrar_mensaje($post){
 
