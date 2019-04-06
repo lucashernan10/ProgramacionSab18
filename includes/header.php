@@ -2,8 +2,8 @@
       <div class="container-fluid"  id="menu-principal">
          <div class="container">
            <nav >          
-          <a href="index.html" class="logo">
-            <img src="imagenes/pagina/logo2.png">
+          <a href="index.php" class="logo">
+            <img src="imagenes/pagina/<?php echo parametros()['logo'] ?>" style="max-width: 190px">
           </a>
 
           <ul>

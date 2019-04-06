@@ -68,7 +68,7 @@ $curso = getDetalleCurso($id);
           </div> 
 
           <div class="col-md-9">
-            <p>descripcion</p>
+            <p><?php echo $curso['descripcion_detallada'] ?></p>
           </div>         
         </div>        
       </section>

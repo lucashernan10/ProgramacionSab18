@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 23-03-2019 a las 19:43:44
+-- Tiempo de generación: 06-04-2019 a las 21:07:00
 -- Versión del servidor: 5.5.24-log
 -- Versión de PHP: 5.4.3
 
@@ -46,9 +46,9 @@ CREATE TABLE IF NOT EXISTS `cursos` (
 --
 
 INSERT INTO `cursos` (`id`, `nombre`, `descripcion_corta`, `descripcion_detallada`, `imagen`, `precio`, `duracion`, `dias`, `fecha_add`, `fecha_update`, `activo`) VALUES
-(2, 'programacion', '              hbbdhdb', '              hbdhbdhbsd', 'imagen_1552764193.jpg', '400000', '4m', '84', '2019-02-16 16:34:14', '2019-03-16 16:23:26', '1'),
-(3, 'ls', '              as', '              sas', 'imagen_1552763265.jpg', 'c6dbeaf1d75044057d66d3034672855a', 'sas', 'ASS', '2019-03-16 16:08:18', '0000-00-00 00:00:00', '1'),
-(4, 'dskmds', '              sdd', '              csc', 'imagen_1552763367.jpg', '', 'dsllcm', 'mvnid', '2019-03-16 16:09:31', '2019-03-16 16:21:47', '0');
+(2, 'programacion', '              hbbdhdb', '              hbdhbdhbsd', 'imagen_1552764193.jpg', '500.000', '4m', '84', '2019-02-16 16:34:14', '2019-03-16 16:23:26', '1'),
+(3, 'Programacion', '              as', '              sas', 'imagen_1552763265.jpg', '500.000', '4m', 'ASS', '2019-03-16 16:08:18', '0000-00-00 00:00:00', '1'),
+(4, 'dskmds', '              sdd', 'Curso de programacion de paginas web desde cero. Aprende a crear paginas dinamicas desde cero incluyendo su panel administrativo', 'imagen_1552763367.jpg', '500000', 'dsllcm', 'mvnid', '2019-03-16 16:09:31', '2019-04-06 16:50:42', '0');
 
 -- --------------------------------------------------------
 
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
 --
 
 INSERT INTO `parametros` (`id`, `empresa`, `logo`, `favicon`, `telefono`, `whatsApp`, `direccion`, `email`, `twitter`, `youtube`, `google_maps`, `descripcion`, `fecha_update`) VALUES
-(1, 'em[resa', 'logo_1552761700.jpg', 'fav', 'tel', 'wats', 'direccq', 'email', 'twitte', 'youtube', 'map', 'descri', '2019-03-16 15:57:23'),
+(1, 'em[resa', 'logo_1554584233.png', 'fav', 'tel', 'wats', 'direccq', 'email', 'twitte', 'youtube', 'map', 'descri', '2019-04-06 16:57:19'),
 (2, 'jfjffkn', 'kgkgkdkm', 'enfjnnfkrngkr', 'ekdkhrtnrk', 'mmmwww', 'majsghdd', 'dkdkmee', 'assdfffg', ',dmdkndke', 'kshjdbnddsc', 'sbabldjjd', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
